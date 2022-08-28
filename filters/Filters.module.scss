@@ -1,0 +1,48 @@
+.container {
+  width: 500px;
+  height: auto;
+  min-height: 400px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: baseline;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  background-color: lighten(orange, 70);
+  border: 1px solid orange;
+  z-index: 100;
+}
+.close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.clear {
+  border: none;
+  font-size: 16px;
+  text-decoration: underline;
+  cursor: pointer;
+  position: absolute;
+  right: 60px;
+  top: 20px;
+}
+.btn {
+  border: 1px solid orange;
+  border-radius: 0.5rem;
+  text-align: center;
+  margin-top: 1rem;
+  height: 30px;
+  background-color: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  &:hover {
+    background-color: rgb(241, 200, 124);
+    color: white;
+    font-weight: 700;
+  }
+}

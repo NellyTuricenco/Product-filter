@@ -1,0 +1,56 @@
+@mixin input($mrl) {
+  width: calc(100% / 2 - 5px);
+  height: 30px;
+  background: lighten(orange, 50);
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin-left: $mrl;
+  padding-left: 5px;
+  &:focus {
+    border: 1px solid orange;
+    outline: none;
+  }
+}
+.select {
+  width: 100%;
+  cursor: pointer;
+  height: 35px;
+  margin-top: 10px;
+  background-color: beige;
+  border: none;
+  border-radius: 4px;
+  padding-left: 7px;
+  &:hover {
+    background-color: lighten(orange, 30);
+  }
+}
+.container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+  &__labelWrapper {
+    width: 100%;
+    padding: 2.5px;
+    text-align: left;
+  }
+  &__label {
+    font-size: 16px;
+    font-weight: 550;
+    color: orange;
+  }
+}
+
+.inputLeft {
+  @include input(0px);
+}
+.inputRight {
+  @include input(2.5px);
+}
+.input__wrapper {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
