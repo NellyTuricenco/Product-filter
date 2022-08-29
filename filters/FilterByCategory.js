@@ -1,6 +1,6 @@
 import style from "./FilterByColor.module.scss";
 
-export const FilterByCategory = ({ handleCategoryChange }) => {
+export const FilterByCategory = ({ value, handleCategoryChange }) => {
   return (
     <div className={style.container}>
       <div className={style.container__labelWrapper}>
@@ -8,8 +8,12 @@ export const FilterByCategory = ({ handleCategoryChange }) => {
           <h2>Category</h2>
         </label>
       </div>
-      <select className={style.select} onChange={handleCategoryChange}>
-        <option value="default"></option>
+      <select
+        className={style.select}
+        onChange={handleCategoryChange}
+        value={value}
+      >
+        <option value="default">{value}</option>
         <option value="Sandals">Sandals</option>
         <option value="Mid-Heels">Mid-Heels</option>
         <option value="Mules">Mules</option>

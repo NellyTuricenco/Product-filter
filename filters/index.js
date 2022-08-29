@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import FilterByPrice from "./FilterByPrice";
 import FilterByColor from "./FilterByColor";
@@ -6,7 +6,10 @@ import FilterByCategory from "./FilterByCategory";
 
 import style from "./Filters.module.scss";
 
-export const Filters = ({ toggleModal, data, setData }) => {
+export const Filters = ({ toggleModal, setData }) => {
+  let list = require("../assets/miista-export.json");
+  const products = list.data.allContentfulProductPage.edges;
+
   //variables nad event handlers for the price filter
   const [priceFrom, setPriceFrom] = useState(0.0);
   const [priceTo, setPriceTo] = useState(10000.0);
@@ -35,23 +38,46 @@ export const Filters = ({ toggleModal, data, setData }) => {
     setCategory(e.target.value);
   };
 
-  const handleApply = () => {
-    const filteredList = data.filter(
-      (el) =>
-        (parseFloat(el.node?.shopifyProductEu?.variants?.edges[0].node.price) >=
+  //handle filtering the product list based on the selected filters
+  const handleApply = useCallback(() => {
+    let filteredProducts = products.filter((el) => {
+      return (
+        parseFloat(el.node?.shopifyProductEu?.variants?.edges[0].node.price) >=
           Number(priceFrom) &&
-          parseFloat(
-            el.node?.shopifyProductEu?.variants?.edges[0].node.price
-          ) <= Number(priceTo)) ||
-        (el.node?.colorFamily !== null &&
-          el.node?.colorFamily[0]?.name === color) ||
+        parseFloat(el.node?.shopifyProductEu?.variants?.edges[0].node.price) <=
+          Number(priceTo)
+      );
+    });
+    if (color) {
+      filteredProducts = filteredProducts.filter((el) => {
+        if (el.node?.colorFamily !== null) {
+          return el.node?.colorFamily[0]?.name === color;
+        }
+      });
+    }
+
+    if (category) {
+      filteredProducts = filteredProducts.filter((el) =>
         el.node?.categoryTags?.includes(category)
-    );
-    setData(filteredList);
-    console.log({ filteredList });
+      );
+    }
+
+    setData(filteredProducts);
+  }, [color, setData, category, priceFrom, priceTo, products]);
+
+  //clear filters handler
+  const handleClearFilter = () => {
+    setColor("");
+    setCategory("");
+    setPriceFrom(0);
+    setPriceTo(10000);
   };
+
   return (
     <div className={style.container}>
+      <button className={style.clear} onClick={handleClearFilter}>
+        Clear filter
+      </button>
       <span className={style.close} onClick={toggleModal}>
         X
       </span>
@@ -62,8 +88,11 @@ export const Filters = ({ toggleModal, data, setData }) => {
         handleChangePriceTo={handleChangePriceTo}
         handleValidate={handleValidate}
       />
-      <FilterByColor handleColorChange={handleColorChange} />
-      <FilterByCategory handleCategoryChange={handleCategoryChange} />
+      <FilterByColor value={color} handleColorChange={handleColorChange} />
+      <FilterByCategory
+        value={category}
+        handleCategoryChange={handleCategoryChange}
+      />
       <button
         className={style.btn}
         onClick={() => {

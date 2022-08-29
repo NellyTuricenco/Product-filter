@@ -13,6 +13,11 @@
 .icon {
   cursor: pointer;
 }
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .main {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -22,6 +27,7 @@
   margin-top: 1.5rem;
 }
 .item {
+  display: grid;
   border: 1px solid grey;
   border-radius: 0.5rem;
   padding: 0.7rem;
@@ -33,9 +39,17 @@
     box-shadow: 4px 5px 5px rgba(0, 0, 0, 0.2);
   }
 }
+.name {
+  font-weight: 600;
+}
 .category {
   display: grid;
   gap: 10px;
   margin: 15px auto;
   color: orange;
+}
+.price {
+  color: red;
+  font-weight: 700;
+  text-transform: capitalize;
 }
